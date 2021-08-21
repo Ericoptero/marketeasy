@@ -1,15 +1,13 @@
 import React, {useCallback, useState} from 'react';
-import {Alert, Text} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {Alert, Image} from 'react-native';
+import {useDispatch} from 'react-redux';
 
 import {authToken} from '../../actions/auth';
 import api from '../../services/api';
-import {RootState} from '../../store';
 
 import {Container, ContainerCentered, TextInput, Button} from './styles';
 
 const Login: React.FC = () => {
-  const token = useSelector((state: RootState) => state.auth.token);
   const dispatch = useDispatch();
 
   const [userInput, setUserInput] = useState('');
@@ -37,7 +35,7 @@ const Login: React.FC = () => {
   return (
     <Container>
       <ContainerCentered>
-        <Text> {token}</Text>
+        <Image source={require('../../../assets/logo.png')} />
 
         <TextInput
           mode="outlined"
@@ -56,7 +54,7 @@ const Login: React.FC = () => {
         />
 
         <Button mode="contained" onPress={Logon}>
-          Press me
+          Entrar
         </Button>
       </ContainerCentered>
     </Container>

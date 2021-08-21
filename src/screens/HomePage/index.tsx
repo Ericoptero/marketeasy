@@ -1,13 +1,14 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState, useEffect, useCallback} from 'react';
-import {useLayoutEffect} from 'react';
+import React, {useState, useEffect, useCallback, useLayoutEffect} from 'react';
 import {Alert, View} from 'react-native';
-import {IconButton} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
-import Loader from '../../components/ContentLoader';
+import {useNavigation} from '@react-navigation/native';
+import {IconButton} from 'react-native-paper';
+
 import api from '../../services/api';
 import {RootState} from '../../store';
 import {logout} from '../../actions/auth';
+
+import Loader from '../../components/ContentLoader';
 
 import {
   Container,

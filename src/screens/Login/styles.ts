@@ -5,7 +5,7 @@ import {
 } from 'react-native-paper';
 
 export const Container = styled.SafeAreaView`
-  background-color: #e3e3e3;
+  background-color: #fff;
   flex: 1;
 `;
 
@@ -13,6 +13,7 @@ export const ContainerCentered = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
+  margin-top: -20%;
   padding-right: 20px;
   padding-left: 20px;
 `;
