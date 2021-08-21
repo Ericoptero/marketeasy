@@ -20,9 +20,21 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           {isAuth ? (
-            <Stack.Screen name="HomePage" component={HomePage} />
+            <Stack.Screen
+              name="HomePage"
+              component={HomePage}
+              options={{
+                title: 'Lista de Produtos',
+                headerStyle: {backgroundColor: '#ff1657'},
+                headerTintColor: '#FFF',
+              }}
+            />
           ) : (
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{headerShown: false}}
+            />
           )}
         </Stack.Navigator>
       </NavigationContainer>
