@@ -1,5 +1,8 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Text} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+
+import {authToken} from '../../actions/auth';
 
 import {Container, ContainerCentered, TextInput, Button} from './styles';
 
@@ -7,10 +10,18 @@ const Login: React.FC = () => {
   const [emailInput, setEmailInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
+  const token = useSelector(state => state.auth.token);
+  const dispatch = useDispatch();
+
+  const Logon = useCallback(async () => {
+    dispatch(authToken('Eric'));
+  }, [dispatch]);
+
   return (
     <Container>
-      <Text>Hello</Text>
       <ContainerCentered>
+        <Text>token {token}</Text>
+
         <TextInput
           mode="outlined"
           label="Nome de usuário"
@@ -25,7 +36,8 @@ const Login: React.FC = () => {
           value={passwordInput}
           onChangeText={value => setPasswordInput(value)}
         />
-        <Button mode="contained" onPress={() => console.log('Pressed')}>
+
+        <Button mode="contained" onPress={Logon}>
           Press me
         </Button>
       </ContainerCentered>
