@@ -66,32 +66,40 @@ const HomePage: React.FC = () => {
         Alert.alert('Oops, ocoreu um erro: ' + error);
       }
     } catch (error) {
-      Alert.alert('Oops, ocoreu um erro: ' + error);
+      Alert.alert('Oops, ocoreu um erro: Entre novamente');
+      dispatch(logout());
     }
 
     setIsLoading(false);
-  }, [token]);
+  }, [token, dispatch]);
 
-  const LogoutButton = useCallback(() => {
+  const logoutUser = useCallback(async () => {
+    // Invalidating token in back-end and removing token from context.
+    await api.get('v1.1/logout', {headers: {token}});
+
+    dispatch(logout());
+  }, [token, dispatch]);
+
+  const logoutButton = useCallback(() => {
     navigation.setOptions({
       headerRight: () => (
         <IconButton
           icon="logout"
           color="#FFF"
           size={24}
-          onPress={() => dispatch(logout())}
+          onPress={() => logoutUser()}
         />
       ),
     });
-  }, [navigation, dispatch]);
+  }, [navigation, logoutUser]);
 
   useEffect(() => {
     fetchProducts();
   }, [token, fetchProducts]);
 
   useLayoutEffect(() => {
-    LogoutButton();
-  }, [LogoutButton]);
+    logoutButton();
+  }, [logoutButton]);
 
   const renderItem = ({item}: {item: ProductProps}) => (
     <Item>
