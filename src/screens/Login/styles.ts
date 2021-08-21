@@ -13,7 +13,8 @@ export const ContainerCentered = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding-horizontal: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
 `;
 
 export const TextInput = styled(RNPTextInput)`

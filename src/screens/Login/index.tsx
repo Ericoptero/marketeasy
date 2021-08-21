@@ -3,19 +3,26 @@ import {Text} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {authToken} from '../../actions/auth';
+import api from '../../services/api';
+import {RootState} from '../../store';
 
 import {Container, ContainerCentered, TextInput, Button} from './styles';
 
 const Login: React.FC = () => {
-  const [emailInput, setEmailInput] = useState('');
+  const [userInput, setUserInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
-  const token = useSelector(state => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth.token);
   const dispatch = useDispatch();
 
   const Logon = useCallback(async () => {
-    dispatch(authToken('Eric'));
-  }, [dispatch]);
+    const {data} = await api.post('v1.1/auth', {
+      usuario: userInput,
+      senha: passwordInput,
+    });
+
+    dispatch(authToken(data.response.token));
+  }, [dispatch, passwordInput, userInput]);
 
   return (
     <Container>
@@ -26,8 +33,8 @@ const Login: React.FC = () => {
           mode="outlined"
           label="Nome de usuário"
           placeholder="Insira seu nome de usuário"
-          value={emailInput}
-          onChangeText={value => setEmailInput(value)}
+          value={userInput}
+          onChangeText={value => setUserInput(value)}
         />
         <TextInput
           mode="outlined"

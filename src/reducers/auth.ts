@@ -1,4 +1,4 @@
-type ActionType = {
+export type ActionType = {
   type: string;
   token: string;
 };
