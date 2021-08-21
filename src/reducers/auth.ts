@@ -4,7 +4,7 @@ export type ActionType = {
 };
 
 const INITIAL_STATE = {
-  token: 'asd',
+  token: '',
 };
 
 export default function auth(state = INITIAL_STATE, action: ActionType) {
