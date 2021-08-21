@@ -1,12 +1,23 @@
-import {createStore} from 'redux';
+import {AnyAction, createStore, Store} from 'redux';
+import {persistStore, persistReducer} from 'redux-persist';
+import AsyncStorage from '@react-native-community/async-storage';
 
-import reducers from './reducers';
+import rootReducers from './reducers';
 import {ActionType} from './reducers/auth';
-
-const store = createStore(reducers);
 
 export type RootState = {
   auth: ActionType;
 };
 
-export default store;
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+  whitelist: ['auth'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+
+let store: Store<any, AnyAction> = createStore(persistedReducer);
+let persistor = persistStore(store);
+
+export {store, persistor};
