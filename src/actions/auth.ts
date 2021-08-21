@@ -4,3 +4,9 @@ export function authToken(token: string) {
     token,
   };
 }
+
+export function logout() {
+  return {
+    type: '@auth/logout',
+  };
+}

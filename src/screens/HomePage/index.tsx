@@ -1,9 +1,13 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useState, useEffect, useCallback} from 'react';
+import {useLayoutEffect} from 'react';
 import {Alert, View} from 'react-native';
-import {useSelector} from 'react-redux';
+import {IconButton} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
 import Loader from '../../components/ContentLoader';
 import api from '../../services/api';
 import {RootState} from '../../store';
+import {logout} from '../../actions/auth';
 
 import {
   Container,
@@ -24,13 +28,14 @@ interface ProductProps {
 
 const HomePage: React.FC = () => {
   const token = useSelector<RootState>(state => state.auth.token);
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     setIsLoading(true);
-
     try {
       const {data} = await api.get(
         'v2.0/produtounidade/listaprodutos/0/unidade/83402711000110',
@@ -66,9 +71,26 @@ const HomePage: React.FC = () => {
     setIsLoading(false);
   }, [token]);
 
+  const LogoutButton = useCallback(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <IconButton
+          icon="logout"
+          color="#FFF"
+          size={24}
+          onPress={() => dispatch(logout())}
+        />
+      ),
+    });
+  }, [navigation, dispatch]);
+
   useEffect(() => {
     fetchProducts();
   }, [token, fetchProducts]);
+
+  useLayoutEffect(() => {
+    LogoutButton();
+  }, [LogoutButton]);
 
   const renderItem = ({item}: {item: ProductProps}) => (
     <Item>
